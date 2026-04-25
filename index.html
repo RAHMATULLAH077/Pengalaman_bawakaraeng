@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerita Bawakaraeng - Form Pengalaman</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================================
+           CSS KUSTOM TEMA PREMIUM (Sama dengan Portofolio)
+        ========================================================== */
+        
+        :root {
+            /* Warna Utama Premium */
+            --primary-blue: #3b82f6; 
+            --primary-green: #14b8a6; 
+            --gradient-main: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            
+            /* TEMA GELAP SEBAGAI DEFAULT (Menyesuaikan script asli) */
+            --bg-color: #0b1120;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --border-color: #334155;
+            --input-bg: #1e293b;
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 15px 35px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 20px 25px -5px rgba(20, 184, 166, 0.15);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* TEMA TERANG */
+        .light-theme {
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(255, 255, 255, 0.5);
+            --border-color: #e2e8f0;
+            --input-bg: #ffffff;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 25px -5px rgba(59, 130, 246, 0.15);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: var(--transition);
+            /* Efek background pattern halus */
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Efek Cahaya Blur (Blobs) di Latar Belakang */
+        body::before {
+            content: ''; position: fixed; top: 10%; left: -10%; width: 400px; height: 400px;
+            background: var(--primary-blue); filter: blur(90px); opacity: 0.3; border-radius: 50%; z-index: -1;
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+        body::after {
+            content: ''; position: fixed; bottom: 10%; right: -10%; width: 300px; height: 300px;
+            background: var(--primary-green); filter: blur(90px); opacity: 0.3; border-radius: 50%; z-index: -1;
+            animation: pulse 4s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.2; }
+            100% { transform: scale(1.1); opacity: 0.4; }
+        }
+
+        /* Tombol Tema */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 100;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .theme-toggle:hover {
+            background: var(--gradient-main);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* Container Formulir Glassmorphism */
+        .form-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: var(--shadow-md);
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+            z-index: 1;
+            margin: 40px 0;
+        }
+
+        .header { text-align: center; margin-bottom: 35px; }
+        .header h1 { 
+            font-size: 2rem; 
+            margin-bottom: 5px; 
+            font-weight: 700;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .altitude { 
+            font-family: 'Courier New', Courier, monospace; 
+            font-weight: bold; 
+            color: var(--primary-green); 
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .header p { font-size: 0.95rem; color: var(--text-muted); margin-top: 5px; }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 30px 0 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-size: 0.85rem; margin-bottom: 8px; color: var(--text-muted); font-weight: 500;}
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            background: var(--input-bg);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: var(--transition);
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        /* Kustomisasi Checkbox & Radio */
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        /* Scrollbar kustom untuk Checkbox Group */
+        .checkbox-group::-webkit-scrollbar { width: 6px; }
+        .checkbox-group::-webkit-scrollbar-track { background: transparent; }
+        .checkbox-group::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .check-item:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .check-item input { 
+            width: auto; 
+            margin-right: 10px; 
+            accent-color: var(--primary-blue); 
+            transform: scale(1.1);
+        }
+
+        /* Tombol Kirim */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-main);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-top: 35px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            letter-spacing: 1px;
+        }
+        
+        .submit-btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: var(--shadow-hover); 
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            line-height: 1.8;
+        }
+        .contact-info { color: var(--primary-blue); font-weight: 600; }
+
+        /* Responsif Mobile */
+        @media (max-width: 600px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .checkbox-group { grid-template-columns: 1fr; }
+            .form-card { padding: 30px 20px; }
+            .theme-toggle { top: 10px; right: 10px; font-size: 0.7rem; padding: 8px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()">MODE TERANG/GELAP</button>
+
+<div class="form-card">
+    <div class="header">
+        <h1>Bawakaraeng Story</h1>
+        <span class="altitude">2830 MDPL</span>
+        <p>Bagikan pengalamanmu di Gunung terindah di Sulawesi Selatan</p>
+    </div>
+
+    <form action="https://formspree.io/f/mqewjarp" method="POST" onsubmit="return validateForm()">
+        
+        <div class="section-title">Identitas Pendaki</div>
+        <div class="input-group">
+            <label>Nama Lengkap</label>
+            <input type="text" name="nama" placeholder="Siapa namamu?" required>
+        </div>
+        
+        <div class="grid-2">
+            <div class="input-group">
+                <label>Tanggal Naik</label>
+                <input type="date" name="tanggal_naik" required>
+            </div>
+            <div class="input-group">
+                <label>Lama Trip (Hari)</label>
+                <input type="number" name="durasi" placeholder="3" required>
+            </div>
+        </div>
+
+        <div class="section-title">Detail Perjalanan</div>
+        <div class="input-group">
+            <label>Jalur yang Dilalui</label>
+            <select name="jalur_pilihan" required>
+                <option value="">Pilih Jalur...</option>
+                <option value="Lembanna">Lembanna (Gowa/Jalur Terpanjang)</option>
+                <option value="Tassoso">Tassoso (Sinjai/Jalur Terpendek)</option>
+                <option value="Bulubalea">Bulubalea (Gowa/Jalur Singkat )</option>
+                <option value="Kanreapia">Jalur Kanreapia (Jalur Baru)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Pos Paling Berkesan (Pilih 1 - 5 Pos)</label>
+            <div class="checkbox-group" id="pos-container">
+                <label class="check-item"><input type="checkbox" name="pos[]" value="Pos 1"> Pos 1</label>
+                <label class="check-item"><input type="checkbox" name="pos[]" value="Pos 2"> Pos 2</label>
+                <label class="check-item"><input type="checkbox" name="pos[]" value="Pos 3"> Pos 3</label>
+                <label class="check-item"><input type="checkbox" name="pos[]" value="Pos 4"> Pos 4</label>
+                <label class="check-item"><input type="checkbox" name="pos[]" value="Pos 5"> Pos 5</label>
+                <label class="check-item"><input type="checkbox" name="pos[]" value="Pos 6"> Pos 6</label>
+                <label class="check-item"><input type="checkbox" name="pos[]" value="Pos 7"> Pos 7</label>
+                <label class="check-item"><input type="checkbox" name="pos[]" value="Pos 8"> Pos 8 (Camp Area)</label>
+                <label class="check-item"><input type="checkbox" name="pos[]" value="Pos 9"> Pos 9 (Camp Area)</label>
+                <label class="check-item"><input type="checkbox" name="pos[]" value="Pos 10"> Pos 10 (Camp Area/Puncak)</label>
+                <label class="check-item"><input type="checkbox" name="pos[]" value="Pos 13"> Pos 13</label>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Kondisi Cuaca</label>
+            <div class="checkbox-group">
+                <label class="check-item"><input type="radio" name="cuaca" value="Cerah" required> Cerah</label>
+                <label class="check-item"><input type="radio" name="cuaca" value="Badai" required> Badai/Hujan</label>
+                <label class="check-item"><input type="radio" name="cuaca" value="Kabut" required> Kabut Tebal</label>
+                <label class="check-item"><input type="radio" name="cuaca" value="Sangat Dingin" required> Sangat Dingin</label>
+                <label class="check-item"><input type="radio" name="cuaca" value="Angin Kencang" required> Angin Kencang</label>
+            </div>
+        </div>
+
+        <div class="section-title">Ulasan Pengalaman</div>
+        <div class="input-group">
+            <label>Pengalaman Selama di Jalur</label>
+            <textarea name="pengalaman" rows="3" placeholder="Ceritakan suka duka di jalur..." required></textarea>
+        </div>
+
+        <div class="input-group">
+            <label>Pengalaman Saat di Puncak</label>
+            <textarea name="pengalaman_puncak" rows="3" placeholder="Apa yang kamu rasakan saat di titik 2830 MDPL?" required></textarea>
+        </div>
+
+        <div class="input-group">
+            <label>Skala Kesulitan (1-10)</label>
+            <input type="number" name="kesulitan" min="1" max="10" placeholder="10" required>
+        </div>
+
+        <button type="submit" class="submit-btn">KIRIM CERITA SEKARANG</button>
+    </form>
+    
+    <footer>
+        Dibuat oleh: <strong>Rahmat Akamsi</strong><br>
+        Contact: <span class="contact-info">085757356514</span><br>
+        © 2026 Pendaki Sulawesi Selatan
+    </footer>
+</div>
+
+<script>
+    function toggleTheme() {
+        document.body.classList.toggle('light-theme');
+    }
+
+    function validateForm() {
+        const checked = document.querySelectorAll('#pos-container input[type="checkbox"]:checked');
+        if (checked.length === 0) {
+            alert("Silakan pilih minimal 1 pos yang paling berkesan!");
+            return false;
+        }
+        if (checked.length > 5) {
+            alert("Maksimal pilih 5 pos saja ya!");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+</body>
+</html>
+
+
+```
+  
